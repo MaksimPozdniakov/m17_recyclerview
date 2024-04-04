@@ -8,8 +8,9 @@ import com.bumptech.glide.Glide
 import project.moms.recycler.databinding.ItemMarsBinding
 import project.moms.recycler.models.MarsPhoto
 
-//class PhotoAdapter(private val onClick: (MarsPhoto) -> Unit) :
-class PhotoAdapter : RecyclerView.Adapter<ListPhotoMarsViewHolder>() {
+class PhotoAdapter(private val onClick: (MarsPhoto) -> Unit) :
+    RecyclerView.Adapter<ListPhotoMarsViewHolder>()
+{
 
     private var list: List<MarsPhoto> = emptyList()
 
@@ -43,9 +44,9 @@ class PhotoAdapter : RecyclerView.Adapter<ListPhotoMarsViewHolder>() {
                     .centerCrop()
                     .into(imageView)
             }
-//            root.setOnClickListener {
-//                onClick(item)
-//            }
+            root.setOnClickListener {
+                onClick(item)
+            }
         }
     }
 }

@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import project.moms.recycler.R
 import project.moms.recycler.databinding.FragmentMainBinding
+import project.moms.recycler.models.MarsPhoto
 import project.moms.recycler.presentation.adapter.PhotoAdapter
 import javax.inject.Inject
 
@@ -31,10 +34,17 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        photoAdapter = PhotoAdapter()
+        photoAdapter = PhotoAdapter {marsPhoto ->  sendPhoto(marsPhoto)}
 
         setupRecyclerView()
         observeViewModel()
+    }
+
+    private fun sendPhoto(item: MarsPhoto) {
+        val bundle = Bundle().apply {
+            putParcelable(FragmentPhotoFullScreen.KEY_PHOTO, item)
+        }
+        findNavController().navigate(R.id.action_mainFragment_to_fragmentPhotoFullScreen, bundle)
     }
 
     private fun setupRecyclerView() {

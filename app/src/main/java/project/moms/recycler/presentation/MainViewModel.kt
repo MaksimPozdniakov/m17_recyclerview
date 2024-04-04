@@ -13,14 +13,6 @@ class MainViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-//    private val dateFormat = SimpleDateFormat()
-//    private val _stateLoad = MutableStateFlow(false)
-//    val stateLoad = _stateLoad.asStateFlow()
-//    private val _datePhotos = MutableStateFlow(START_DATE)
-//    val datePhotos = _datePhotos.asStateFlow()
-
-
-
     private val _listPhotoMars = MutableStateFlow(MarsPhotosResponse(listOf()))
     val listPhotoMars = _listPhotoMars.asStateFlow()
 
@@ -31,7 +23,7 @@ class MainViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch {
-            _listPhotoMars.value = repository.loadPhoto("2020-01-01")
+            _listPhotoMars.value = repository.loadPhoto("2024-01-01")
         }
     }
 }

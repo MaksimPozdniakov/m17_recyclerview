@@ -9,7 +9,11 @@
         android:id="@+id/mainFragment"
         android:name="project.moms.recycler.presentation.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_fragmentPhotoFullScreen"
+            app:destination="@id/fragmentPhotoFullScreen" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentPhotoFullScreen"
         android:name="project.moms.recycler.presentation.FragmentPhotoFullScreen"
