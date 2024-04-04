@@ -72,6 +72,9 @@ dependencies {
     // RoundImageView
     implementation("com.makeramen:roundedimageview:2.3.0")
 
+    // Swiperefreshlayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import project.moms.recycler.R
 import project.moms.recycler.databinding.FragmentMainBinding
 import project.moms.recycler.models.MarsPhoto
@@ -36,8 +37,13 @@ class MainFragment : Fragment() {
 
         photoAdapter = PhotoAdapter {marsPhoto ->  sendPhoto(marsPhoto)}
 
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refresh()
+        }
+
         setupRecyclerView()
         observeViewModel()
+        checkState()
     }
 
     private fun sendPhoto(item: MarsPhoto) {
@@ -58,6 +64,21 @@ class MainFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.listPhotoMars.collect { listPhotoMars ->
                 photoAdapter.setList(listPhotoMars.photos)
+            }
+        }
+    }
+
+    private fun checkState() {
+        lifecycleScope.launch {
+            viewModel.state.collect {
+                when(it) {
+                    State.LOADING -> {
+                        binding.swipeRefresh.isRefreshing = true
+                    }
+                    State.SUCCESS -> {
+                        binding.swipeRefresh.isRefreshing = false
+                    }
+                }
             }
         }
     }

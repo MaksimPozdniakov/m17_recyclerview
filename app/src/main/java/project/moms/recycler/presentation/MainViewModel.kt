@@ -16,6 +16,8 @@ class MainViewModel @Inject constructor(
     private val _listPhotoMars = MutableStateFlow(MarsPhotosResponse(listOf()))
     val listPhotoMars = _listPhotoMars.asStateFlow()
 
+    private val _state = MutableStateFlow(State.SUCCESS)
+    val state = _state.asStateFlow()
 
     init {
         loadData()
@@ -23,7 +25,13 @@ class MainViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch {
+            _state.value = State.LOADING
             _listPhotoMars.value = repository.loadPhoto("2024-01-01")
+            _state.value = State.SUCCESS
         }
+    }
+
+    fun refresh() {
+        loadData()
     }
 }
